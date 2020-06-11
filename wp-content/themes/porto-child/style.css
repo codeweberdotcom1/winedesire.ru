@@ -14,11 +14,14 @@ Tags: woocommerce, corporate, ecommerce, responsive, blue, black, green, white, 
 /*************** ADD YOUR CUSTOM CSS HERE  ***************/
 
 
-@media (min-width: 1440px)
-#header .searchform.searchform-cats input {
+@media (min-width: 1440px) {
+div#ajaxsearchpro3_1 {
     width: 350px;
+}	
 }
-@media (max-width: 1219px) and (min-width: 768px)
-#header .searchform.searchform-cats input {
+
+@media (max-width: 1219px) and (min-width: 768px) {
+div#ajaxsearchpro3_1 {
     width: 190px;
+}
 }

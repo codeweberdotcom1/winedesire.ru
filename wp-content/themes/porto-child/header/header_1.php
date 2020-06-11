@@ -67,10 +67,7 @@ if ( $porto_settings['welcome-msg'] ) {
 				?>
 			</div>
 			<div class="header-center">
-				<?php
-				// show search form
-				echo porto_search_form();
-				?>
+				<?php echo do_shortcode('[wd_asp id=3]'); ?>
 			</div>
 			<div class="header-right">
 				<div class="header-minicart">

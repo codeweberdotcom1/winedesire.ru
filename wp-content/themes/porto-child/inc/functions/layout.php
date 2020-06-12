@@ -1937,7 +1937,6 @@ function porto_mobile_menu( $secondary_menu = false ) {
 }
 
 function porto_search_form() {
-	
 	echo do_shortcode('[wd_asp id=3]');
 }
 

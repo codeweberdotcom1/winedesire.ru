@@ -574,32 +574,62 @@ function bbloomer_display_wp_editor_content() {
 
 
 
-// we are going to hook this on priority 31, so that it would display below add to cart button.
-add_action( 'woocommerce_single_product_summary', 'woocommerce_total_product_price', 31 );
-function woocommerce_total_product_price() {
-    global $woocommerce, $product;
-    // let's setup our divs
-    echo sprintf('<div id="product_total_price" style="margin-bottom:20px;display:none">%s %s</div>',__('Product Total:','woocommerce'),'<span class="price">'.$product->get_price().'</span>');
-    echo sprintf('<div id="cart_total_price" style="margin-bottom:20px;display:none">%s %s</div>',__('Cart Total:','woocommerce'),'<span class="price">'.$product->get_price().'</span>');
-    ?>
-        <script>
-            jQuery(function($){
-                var price = <?php echo $product->get_price(); ?>,
-                    current_cart_total = <?php echo $woocommerce->cart->cart_contents_total; ?>,
-                    currency = '<?php echo get_woocommerce_currency_symbol(); ?>';
+// Add a custom field before single add to cart
+add_action( 'woocommerce_before_add_to_cart_button', 'custom_product_price_field', 5 );
+function custom_product_price_field(){
+    echo '<div class="custom-text text">
+    <p>Extra Charge ('.get_woocommerce_currency_symbol().'):</p>
+    <input type="text" name="custom_price" value="" placeholder="e.g. 10" title="Custom Text" class="custom_price text_custom text">
+    </div>';
+}
 
-                $('[name=quantity]').change(function(){
-                    if (!(this.value < 1)) {
-                        var product_total = parseFloat(price * this.value),
-                        cart_total = parseFloat(product_total + current_cart_total);
+// Get custom field value, calculate new item price, save it as custom cart item data
+add_filter('woocommerce_add_cart_item_data', 'add_custom_field_data', 20, 2 );
+function add_custom_field_data( $cart_item_data, $product_id ){
+    if (! isset($_POST['custom_price']))
+        return $cart_item_data;
 
-                        $('#product_total_price .price').html( currency + product_total.toFixed(2));
-                        $('#cart_total_price .price').html( currency + cart_total.toFixed(2));
-                    }
-                    $('#product_total_price,#cart_total_price').toggle(!(this.value <= 1));
+    $custom_price = (float) sanitize_text_field( $_POST['custom_price'] );
+    if( empty($custom_price) )
+        return $cart_item_data;
 
-                });
-            });
-        </script>
-    <?php
+    $product    = wc_get_product($product_id); // The WC_Product Object
+    $base_price = (float) $product->get_regular_price(); // Product reg price
+
+    // New price calculation
+    $new_price = $base_price + $custom_price;
+
+    // Set the custom amount in cart object
+    $cart_item_data['custom_data']['extra_charge'] = (float) $custom_price;
+    $cart_item_data['custom_data']['new_price'] = (float) $new_price;
+    $cart_item_data['custom_data']['unique_key'] = md5( microtime() . rand() ); // Make each item unique
+
+    return $cart_item_data;
+}
+
+// Set the new calculated cart item price
+add_action( 'woocommerce_before_calculate_totals', 'extra_price_add_custom_price', 20, 1 );
+function extra_price_add_custom_price( $cart ) {
+    if ( is_admin() && ! defined( 'DOING_AJAX' ) )
+        return;
+
+    if ( did_action( 'woocommerce_before_calculate_totals' ) >= 2 )
+        return;
+
+    foreach ( $cart->get_cart() as $cart_item ) {
+        if( isset($cart_item['custom_data']['new_price']) )
+            $cart_item['data']->set_price( (float) $cart_item['custom_data']['new_price'] );
+    }
+}
+
+// Display cart item custom price details
+add_filter('woocommerce_cart_item_price', 'display_cart_items_custom_price_details', 20, 3 );
+function display_cart_items_custom_price_details( $product_price, $cart_item, $cart_item_key ){
+    if( isset($cart_item['custom_data']['extra_charge']) ) {
+        $product = $cart_item['data'];
+        $product_price  = wc_price( wc_get_price_to_display( $product, array( 'price' => $product->get_regular_price() ) ) );
+        $product_price .= '<br>' . wc_price( $cart_item['custom_data']['extra_charge'] ).'&nbsp;';
+        $product_price .= __("Extra Charge", "woocommerce" );
+    }
+    return $product_price;
 }

@@ -25,6 +25,6 @@ div#ajaxsearchpro3_1 {
     width: 190px;
 }
 }
-.my-account{
-    color: #c00;
+#header .my-account{
+    color: #c00!important;
 }

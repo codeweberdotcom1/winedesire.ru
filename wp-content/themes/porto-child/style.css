@@ -37,9 +37,10 @@ div.asp_w.ajaxsearchpro.asp_non_compact {
 }
 
 .phone-top {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
 }
 .phone-top a i {
     padding-right: 5px;
+        font-size: 12px;
 }

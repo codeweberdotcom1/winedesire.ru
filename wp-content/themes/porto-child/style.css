@@ -33,5 +33,4 @@ div#ajaxsearchpro3_1 {
 }
 
 div.asp_w.ajaxsearchpro.asp_non_compact {
-    min-width: 200px;
-}
+    min-width: 200px!important;

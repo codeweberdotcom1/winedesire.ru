@@ -31,3 +31,7 @@ div#ajaxsearchpro3_1 {
 #header .header-right {
     z-index: 99999;
 }
+
+div.asp_w.ajaxsearchpro.asp_non_compact {
+    min-width: 200px;
+}

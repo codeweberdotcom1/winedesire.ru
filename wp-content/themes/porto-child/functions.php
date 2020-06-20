@@ -571,3 +571,6 @@ function bbloomer_display_wp_editor_content() {
       }
    }
 }
+.ywmmq-rules-wrapper.entry-summary {
+    display: none;
+}

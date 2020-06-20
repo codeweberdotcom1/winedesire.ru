@@ -42,5 +42,9 @@ div.asp_w.ajaxsearchpro.asp_non_compact {
 }
 .phone-top a i {
     padding-right: 5px!important;
-        font-size: 12px!important;
+    font-size: 12px!important;
+}
+#footer .widget > div > ul, #footer .widget > ul, #footer .widget > div > ul li, #footer .widget > ul li, #footer .post-item-small {
+    border-color: rgba(119,119,119,0.3);
+    border: 0;
 }

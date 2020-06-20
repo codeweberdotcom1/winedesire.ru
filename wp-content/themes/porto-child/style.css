@@ -49,3 +49,6 @@ div.asp_w.ajaxsearchpro.asp_non_compact {
 .widget > div > ul li, .widget > ul li {
     line-height: 1;
 }
+.ywmmq-rules-wrapper.entry-summary {
+    display: none;
+}

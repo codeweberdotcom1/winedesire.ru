@@ -14,7 +14,7 @@ Tags: woocommerce, corporate, ecommerce, responsive, blue, black, green, white, 
 /*************** ADD YOUR CUSTOM CSS HERE  ***************/
 
 
-/**************@media (min-width: 1440px) {
+@media (min-width: 1440px) {
 div#ajaxsearchpro3_1 {
     width: 350px;
 }	
@@ -25,14 +25,13 @@ div#ajaxsearchpro3_1 {
     width: 190px;
 }
 }
-
+#header.my-account{
+    color: #000!important
+}
 
 
 div.asp_w.ajaxsearchpro.asp_non_compact {
     min-width: 200px!important;
-}***************/
-#header.my-account{
-    color: #000!important
 }
 
 .phone-top {

@@ -16,10 +16,10 @@ Tags: woocommerce, corporate, ecommerce, responsive, blue, black, green, white, 
 
 @media (min-width: 1440px) {
 div#ajaxsearchpro3_1 {
-    width: 350px;
+    width: 350px!important;
 }	
 div.asp_w.ajaxsearchpro.asp_non_compact {
-    min-width: 350px;
+    min-width: 350px!important;
 }
 }
 

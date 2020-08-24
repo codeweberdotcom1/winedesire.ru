@@ -582,3 +582,6 @@ function woocommerce_header_add_to_cart_fragment( $fragments ) {
 
     return $fragments;
 }
+
+add_filter( 'wp_lazy_loading_enabled', '__return_false' );
+

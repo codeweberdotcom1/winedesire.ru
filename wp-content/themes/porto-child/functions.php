@@ -585,3 +585,10 @@ function woocommerce_header_add_to_cart_fragment( $fragments ) {
 
 add_filter( 'wp_lazy_loading_enabled', '__return_false' );
 
+
+add_filter('woocommerce_order_item_name', 'woo_order_item_with_link', 10, 3);
+function woo_order_item_with_link( $item_name, $item, $bool ) {
+    $url = get_permalink( $item['product_id'] ) ;
+    return '<a href="'. $url .'">'. $item_name .'</a>'; 
+}
+
